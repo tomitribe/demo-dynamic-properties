@@ -14,24 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomitribe.support
+package com.tomitribe.support;
 
-import javax.annotation.Resource
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
+import javax.annotation.Resource;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
-@Produces('application/json')
-@Path('/api/info')
-class ApiInfo {
+@Produces("application/json")
+@Path("/api/info")
+public class ApiInfo {
 
     @Resource
-    Info info
+    private Info info;
 
     @GET
-    Info getInfo() {
+    public Info getInfo() {
         // simply load the "info" resource and return it as json
-        return info
+        return info;
     }
 
 }

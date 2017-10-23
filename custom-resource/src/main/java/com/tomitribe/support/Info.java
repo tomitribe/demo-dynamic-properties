@@ -14,9 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomitribe.support
+package com.tomitribe.support;
 
-class Info {
-    String hostname
-    String publicIp
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
+public class Info {
+
+    @XmlElement
+    private String hostname;
+
+    @XmlElement
+    private String publicIp;
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public String getPublicIp() {
+        return publicIp;
+    }
+
+    public void setPublicIp(String publicIp) {
+        this.publicIp = publicIp;
+    }
+
 }

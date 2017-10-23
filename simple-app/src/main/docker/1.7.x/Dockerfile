@@ -1,9 +1,8 @@
-FROM tomee:8-jre-7.0.3-plus
+FROM tomee:8-jre-1.7.4-plus
 
 RUN rm -Rf /usr/local/tomee/webapps/*
 
 COPY app-lib/custom-resource-${project.version}.jar /usr/local/tomee/lib/
-COPY app-lib/groovy-all-${groovy.version}.jar /usr/local/tomee/lib/
 COPY app-lib/javaee-api-7.0.jar /usr/local/tomee/lib/
 COPY app-lib/properties-provider-${project.version}.jar /usr/local/tomee/lib/
 
