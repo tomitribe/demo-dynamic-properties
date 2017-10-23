@@ -50,6 +50,12 @@ Let's write a custom property class and use if with a properties provider that d
 In order to load the hostname, `PropertiesService` will execute the `hostname` command; In order to load the public ip address,
 it will call a public rest api via `curl`.
 
+=== Important classes
+
+* The custom resource class: https://github.com/tomitribe/demo-dynamic-properties/blob/master/custom-resource/src/main/groovy/com/tomitribe/support/Info.groovy
+* The `PropertiesResourceProvider` that will retrieve the final values for us: https://github.com/tomitribe/demo-dynamic-properties/blob/master/properties-provider/src/main/groovy/com/tomitribe/support/PropertiesService.groovy
+* The Rest API to load the final results: https://github.com/tomitribe/demo-dynamic-properties/blob/master/simple-app/src/main/groovy/com/tomitribe/support/ApiInfo.groovy
+
 == How to test it?
 
 If you want to test it locally, first build this project with `mvn clean install`. Now you can execute
