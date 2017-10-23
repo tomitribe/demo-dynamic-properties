@@ -1,0 +1,70 @@
+= Dynamic properties
+
+In order to make your microservices deployment easier, you want to have a way to dynamically retrieve
+resources configuration according to your business needs. Imagine you need to change the database
+username configured in some system.properties file across 100's TomEE servers. If changing all the
+100's of system.properties or redeploying all the servers is not an option, you could use the
+properties-provider feature from TomEE.
+
+== How does this work?
+
+You write your resources.xml file in a way that it uses a properties-provider to retrieve the properties
+dynamically for you. Example:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="movieDatabase" type="DataSource" properties-provider="org.superbiz.PropertiesService">
+        JdbcDriver com.mysql.jdbc.Driver
+        JdbcUrl    jdbc:mysql://$[db.host]/movies
+        UserName   $[db.username]
+        Password   $[db.password]
+    </Resource>
+</resources>
+```
+
+The block above you will notice the `properties-provider` attribute. It specifies how TomEE will retrieve
+the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
+
+Lets do something similar to what the Apache HTTPd server has. We will retrieve our values by executing
+a command line call.
+
+AuthLDAPBindPassword "exec:/bin/cat /run/secrets/tribe_ldap_pass"
+
+Let's write a custom property class and use if with a properties provider.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="info" class-name="com.tomitribe.support.Info" properties-provider="com.tomitribe.support.PropertiesService">
+        hostname exec:hostname
+        publicIp exec:curl https://api.ipify.org
+    </Resource>
+</resources>
+```
+
+In order to load the hostname, `PropertiesService` will execute the `hostname` command; In order to load the public ip address,
+it will call a public rest api via `curl`.
+
+== How to test it?
+
+If you want to test it locally, first build this project with `mvn clean install`. Now you can execute
+`mvn tomee:run --projects simple-app/` to run Apache TomEE locally.
+
+If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty`.
+
+If you want to test it remotely with no installation, try it with play-with-docker here:
+http://play-with-docker.com/?stack=https://aaa.com/stack.yaml
+
+== External resources
+
+* http://tomee.apache.org/application-resources.html
+* https://rmannibucau.wordpress.com/2014/08/06/tomee-and-more-advanced-resource-configuration/
+
+
+
+
+
+
+
+
