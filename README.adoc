@@ -2,13 +2,13 @@
 
 In order to make your microservices deployment easier, you want to have a way to dynamically retrieve
 resources configuration according to your business needs. Imagine you need to change the database
-username configured in some system.properties file across 100's TomEE servers. If changing all the
-100's of system.properties or redeploying all the servers is not an option, you could use the
-properties-provider feature from TomEE.
+username configured in some `system.properties` file across 100's TomEE servers. If changing all the
+100's of `system.properties` or redeploying all the servers is not an option, you could use the
+`properties-provider` feature from Apache TomEE.
 
 == How does this work?
 
-You write your resources.xml file in a way that it uses a properties-provider to retrieve the properties
+You write your resources.xml file in a way that it uses a `properties-provider` to retrieve the properties
 dynamically for you. Example:
 
 ```
@@ -23,15 +23,19 @@ dynamically for you. Example:
 </resources>
 ```
 
-The block above you will notice the `properties-provider` attribute. It specifies how TomEE will retrieve
-the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
+In the block above you will notice the `properties-provider` attribute. It specifies the class TomEE will use to
+retrieve the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
 
 Lets do something similar to what the Apache HTTPd server has. We will retrieve our values by executing
-a command line call.
+a shell command.
 
+This is how we would load the ldap password from a `httpd.conf` file:
+
+```
 AuthLDAPBindPassword "exec:/bin/cat /run/secrets/tribe_ldap_pass"
+```
 
-Let's write a custom property class and use if with a properties provider.
+Let's write a custom property class and use if with a properties provider that does the same as above.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -51,10 +55,13 @@ it will call a public rest api via `curl`.
 If you want to test it locally, first build this project with `mvn clean install`. Now you can execute
 `mvn tomee:run --projects simple-app/` to run Apache TomEE locally.
 
-If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty`.
+If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty` or
+`docker-compose -f stack.yaml up`
 
-If you want to test it remotely with no installation, try it with play-with-docker here:
-http://play-with-docker.com/?stack=https://aaa.com/stack.yaml
+Services available here:
+
+* http://localhost:8080/api/info/
+* in case you are using docker-compose, you will also see http://localhost:8081/api/info/
 
 == External resources
 
