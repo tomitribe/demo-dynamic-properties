@@ -29,8 +29,9 @@ public class PropertiesService implements PropertiesResourceProvider {
 
     private Properties properties;
 
-    public Properties getProperties() {
-        return properties;
+    // The raw original properties from the resources.xml resource entry
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 
     @Override
