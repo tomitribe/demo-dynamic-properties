@@ -21,6 +21,7 @@ import org.apache.openejb.api.resource.PropertiesResourceProvider;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -57,8 +58,9 @@ public class PropertiesService implements PropertiesResourceProvider {
             URI uri = null;
             try {
                 uri = new URI(value);
-            } catch (URISyntaxException e) {
-                // ignore
+                uri.toURL();
+            } catch (MalformedURLException | URISyntaxException | IllegalArgumentException e) {
+                uri = null;
             }
             if (uri != null) {
                 try (InputStream is = cache.getContent(uri)) {

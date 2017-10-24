@@ -53,6 +53,7 @@
                 <configuration>
                     <tomeeClassifier>plus</tomeeClassifier>
                     <context>ROOT</context>
+                    <args>-Dhostname=${env.USER}_computer -Dservers.zookeeper=file://${project.basedir}/src/main/docker/7.0.x/servers.properties#zookeeper_servers -Dservers.cassandra=file://${project.basedir}/src/main/docker/7.0.x/servers.properties#cassandra_servers</args>
                     <libs>
                         <lib>${project.groupId}:custom-resource:${project.version}</lib>
                         <lib>${project.groupId}:properties-provider:${project.version}</lib>
