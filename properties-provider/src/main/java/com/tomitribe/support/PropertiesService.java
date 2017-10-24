@@ -38,7 +38,9 @@ public class PropertiesService implements PropertiesResourceProvider {
 
     private Properties properties;
 
-    // The raw original properties from the resources.xml resource entry
+    // The raw original properties from the resources.xml
+    // resource entry. If "properties" has no setter,
+    // TomEE you inject the values direclty into the "properties" property.
     public void setProperties(Properties properties) {
         this.properties = properties;
     }

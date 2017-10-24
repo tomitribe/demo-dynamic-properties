@@ -8,8 +8,9 @@ username configured in some `system.properties` file across 100's TomEE servers.
 
 == How does this work?
 
-You write your resources.xml file in a way that it uses a `properties-provider` to retrieve the properties
-dynamically for you. Example:
+You write your `resources.xml` file in a way that it uses a `properties-provider` object to retrieve the properties
+for you. Example:
+
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -23,8 +24,37 @@ dynamically for you. Example:
 </resources>
 ```
 
+
 In the block above you will notice the `properties-provider` attribute. It specifies the class TomEE will use to
 retrieve the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
+
+
+```
+public class PropertiesService implements PropertiesResourceProvider {
+
+    private Properties properties;
+
+	// (1) TomEE will provide "properties" from the
+	// resource definition by calling this setter.
+	// If "properties" has no setter, TomEE you
+	// inject the values directly into the "properties"
+	// property.
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    @Override
+    public Properties provides() {
+	  // (2) this method *must* return *all* the
+	  // properties for the resource, and the
+	  // values *must* be the final values. No
+	  // further substitution, trimming or other
+	  // manipulation will be performed.
+	  return result;
+    }
+}
+```
+
 
 Lets do something similar but by using both variable replacement from default TomEE properties provider and a custom
 properties provider. We will retrieve our values by loading content from a URI like
@@ -42,7 +72,9 @@ properties provider. We will retrieve our values by loading content from a URI l
 </resources>
 ```
 
+
 The TomEE server will load system properties first. Imagine we have a system.properties like this...
+
 
 ```
 hostname=file:///etc/hostname
@@ -50,8 +82,10 @@ servers.zookeeper=file:///opt/servers.properties#zookeeper_servers
 servers.cassandra=file:///opt/servers.properties#cassandra_servers
 ```
 
+
 After TomEE replaces the `${}` values with the values from this `system.properties`, the same `resources.xml` will look
 like this in memory...
+
 
 ```
 <resources>
@@ -63,9 +97,10 @@ like this in memory...
 </resources>
 ```
 
+
 Now our custom provider can replace the URI values with the data from the remote resources.
 
-=== Important classes
+=== Relevant sample code
 
 * The custom resource class: https://github.com/tomitribe/demo-dynamic-properties/blob/master/custom-resource/src/main/java/com/tomitribe/support/Info.java
 * The `PropertiesResourceProvider` that will retrieve the final values for us: https://github.com/tomitribe/demo-dynamic-properties/blob/master/properties-provider/src/main/java/com/tomitribe/support/PropertiesService.java
@@ -88,8 +123,6 @@ Services available here:
 
 * http://tomee.apache.org/application-resources.html
 * https://rmannibucau.wordpress.com/2014/08/06/tomee-and-more-advanced-resource-configuration/
-
-
 
 
 
