@@ -76,7 +76,9 @@ Now our custom provider can replace the URI values with the data from the remote
 If you want to test it locally, first build this project with `mvn clean install`. Now you can execute
 `mvn tomee:run --projects simple-app/` to run Apache TomEE locally.
 
-If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty`
+If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty` for TomEE 7.0.3.
+
+For TomEE 1.7.4, run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty:1.7.x-0.0.1-SNAPSHOT`.
 
 Services available here:
 
