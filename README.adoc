@@ -26,11 +26,11 @@ dynamically for you. Example:
 In the block above you will notice the `properties-provider` attribute. It specifies the class TomEE will use to
 retrieve the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
 
-Lets do something similar to what the Apache HTTPd server has. We will retrieve our values by loading content
-a URI like `file:///opt/servers.properties#cassandra_servers`, where `#cassandra_servers` is the key inside the
+Lets do something similar but by using both variable replacement from default TomEE properties provider and a custom
+properties provider. We will retrieve our values by loading content from a URI like
+`file:///opt/servers.properties#cassandra_servers`, where `#cassandra_servers` is the key inside the
 `servers.properties` resource.
 
-Let's write a custom property class and use if with a properties provider to load values from URIs.
 
 ```
 <resources>
@@ -76,13 +76,11 @@ Now our custom provider can replace the URI values with the data from the remote
 If you want to test it locally, first build this project with `mvn clean install`. Now you can execute
 `mvn tomee:run --projects simple-app/` to run Apache TomEE locally.
 
-If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty` or
-`docker-compose -f stack.yaml up`
+If you want to test it with docker, simply run `docker run --rm -ti -p 8080:8080 tomitribe/demo-dynproperty`
 
 Services available here:
 
 * http://localhost:8080/api/info/
-* in case you are using docker-compose, you will also see http://localhost:8081/api/info/
 
 == External resources
 
