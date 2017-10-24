@@ -67,9 +67,9 @@ Now our custom provider can replace the URI values with the data from the remote
 
 === Important classes
 
-* The custom resource class: https://github.com/tomitribe/demo-dynamic-properties/blob/master/custom-resource/src/main/groovy/com/tomitribe/support/Info.groovy
-* The `PropertiesResourceProvider` that will retrieve the final values for us: https://github.com/tomitribe/demo-dynamic-properties/blob/master/properties-provider/src/main/groovy/com/tomitribe/support/PropertiesService.groovy
-* The Rest API to load the final results: https://github.com/tomitribe/demo-dynamic-properties/blob/master/simple-app/src/main/groovy/com/tomitribe/support/ApiInfo.groovy
+* The custom resource class: https://github.com/tomitribe/demo-dynamic-properties/blob/master/custom-resource/src/main/java/com/tomitribe/support/Info.java
+* The `PropertiesResourceProvider` that will retrieve the final values for us: https://github.com/tomitribe/demo-dynamic-properties/blob/master/properties-provider/src/main/java/com/tomitribe/support/PropertiesService.java
+* The Rest API to load the final results: https://github.com/tomitribe/demo-dynamic-properties/blob/master/simple-app/src/main/java/com/tomitribe/support/ApiInfo.java
 
 == How to test it?
 
