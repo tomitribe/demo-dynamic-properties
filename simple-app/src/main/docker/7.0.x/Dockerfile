@@ -7,3 +7,6 @@ COPY app-lib/javaee-api-7.0.jar /usr/local/tomee/lib/
 COPY app-lib/properties-provider-${project.version}.jar /usr/local/tomee/lib/
 
 COPY simple-app.war /usr/local/tomee/webapps/ROOT.war
+
+COPY servers.properties /opt/
+COPY system.properties /usr/local/tomee/conf/

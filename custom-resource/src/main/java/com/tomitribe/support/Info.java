@@ -29,7 +29,10 @@ public class Info {
     private String hostname;
 
     @XmlElement
-    private String publicIp;
+    private String zookeeperServers;
+
+    @XmlElement
+    private String cassandraServers;
 
     public String getHostname() {
         return hostname;
@@ -39,12 +42,20 @@ public class Info {
         this.hostname = hostname;
     }
 
-    public String getPublicIp() {
-        return publicIp;
+    public String getZookeeperServers() {
+        return zookeeperServers;
     }
 
-    public void setPublicIp(String publicIp) {
-        this.publicIp = publicIp;
+    public void setZookeeperServers(String zookeeperServers) {
+        this.zookeeperServers = zookeeperServers;
+    }
+
+    public String getCassandraServers() {
+        return cassandraServers;
+    }
+
+    public void setCassandraServers(String cassandraServers) {
+        this.cassandraServers = cassandraServers;
     }
 
 }

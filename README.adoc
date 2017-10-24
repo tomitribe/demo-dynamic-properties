@@ -26,29 +26,44 @@ dynamically for you. Example:
 In the block above you will notice the `properties-provider` attribute. It specifies the class TomEE will use to
 retrieve the `$[db.host]`, `$[db.username]` and `$[db.password]` values.
 
-Lets do something similar to what the Apache HTTPd server has. We will retrieve our values by executing
-a shell command.
+Lets do something similar to what the Apache HTTPd server has. We will retrieve our values by loading content
+a URI like `file:///opt/servers.properties#cassandra_servers`, where `#cassandra_servers` is the key inside the
+`servers.properties` resource.
 
-This is how we would load the ldap password from a `httpd.conf` file:
-
-```
-AuthLDAPBindPassword "exec:/bin/cat /run/secrets/tribe_ldap_pass"
-```
-
-Let's write a custom property class and use if with a properties provider that does the same as above.
+Let's write a custom property class and use if with a properties provider to load values from URIs.
 
 ```
-<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <Resource id="info" class-name="com.tomitribe.support.Info" properties-provider="com.tomitribe.support.PropertiesService">
-        hostname exec:hostname
-        publicIp exec:curl https://api.ipify.org
+        hostname ${hostname}
+        zookeeperServers ${servers.zookeeper}
+        cassandraServers ${servers.cassandra}
     </Resource>
 </resources>
 ```
 
-In order to load the hostname, `PropertiesService` will execute the `hostname` command; In order to load the public ip address,
-it will call a public rest api via `curl`.
+The TomEE server will load system properties first. Imagine we have a system.properties like this...
+
+```
+hostname=file:///etc/hostname
+servers.zookeeper=file:///opt/servers.properties#zookeeper_servers
+servers.cassandra=file:///opt/servers.properties#cassandra_servers
+```
+
+After TomEE replaces the `${}` values with the values from this `system.properties`, the same `resources.xml` will look
+like this in memory...
+
+```
+<resources>
+    <Resource id="info" class-name="com.tomitribe.support.Info" properties-provider="com.tomitribe.support.PropertiesService">
+        hostname file:///etc/hostname
+        zookeeperServers file:///opt/servers.properties#zookeeper_servers
+        cassandraServers file:///opt/servers.properties#cassandra_servers
+    </Resource>
+</resources>
+```
+
+Now our custom provider can replace the URI values with the data from the remote resources.
 
 === Important classes
 

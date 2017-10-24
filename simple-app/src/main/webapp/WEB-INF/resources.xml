@@ -17,7 +17,8 @@
   -->
 <resources>
     <Resource id="info" class-name="com.tomitribe.support.Info" properties-provider="com.tomitribe.support.PropertiesService">
-        hostname exec:hostname
-        publicIp exec:curl https://api.ipify.org
+        hostname ${hostname}
+        zookeeperServers ${servers.zookeeper}
+        cassandraServers ${servers.cassandra}
     </Resource>
 </resources>
