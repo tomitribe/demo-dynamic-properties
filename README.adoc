@@ -123,6 +123,7 @@ Services available here:
 
 * http://tomee.apache.org/application-resources.html
 * https://rmannibucau.wordpress.com/2014/08/06/tomee-and-more-advanced-resource-configuration/
+* https://support.tomitribe.com/hc/en-us/articles/115013878408-Using-the-Properties-resource-provider
 
 
 
